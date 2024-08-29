@@ -7,4 +7,7 @@ from users.forms import StyleFormMixin
 class RecordForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Record
-        exclude = ("author", 'created_at',)
+        exclude = (
+            "author",
+            "created_at",
+        )

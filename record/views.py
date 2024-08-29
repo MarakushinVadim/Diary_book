@@ -4,7 +4,8 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView)
 
 from record.forms import RecordForm
 from record.models import Record
@@ -64,11 +65,12 @@ class RecordDeleteView(LoginRequiredMixin, DeleteView):
 def search(request):
     results = []
     if request.method == "GET":
-        query = request.GET.get('search')
-    if query == '':
-        query = 'None'
+        query = request.GET.get("search")
+    if query == "":
+        query = "None"
 
     results = Record.objects.filter(
-        Q(name__icontains=query) | Q(description__icontains=query))
+        Q(name__icontains=query) | Q(description__icontains=query)
+    )
 
-    return render(request, 'record/search.html', {'query': query, 'results': results})
+    return render(request, "record/search.html", {"query": query, "results": results})
