@@ -1,0 +1,60 @@
+<html>
+
+<head>
+
+    <title>Результаты поиска</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<br/></br/>
+
+<div class="container">
+
+    <div class="col-md-8 offset-md-2">
+
+        {% if query %}
+
+        <h2>
+
+            {% with results.count as total_results %}
+
+            Найдено {{ total_results }} {{ total_results|pluralize }}
+
+            {% endwith %}
+
+        </h2>
+
+        {% for c in results %}
+
+        <a href="{% url 'record:detail' c.pk %}"><h3>{{c.name}}</h3></a>
+
+        <h3>{{c.author_name}}</h3>
+
+        {% empty %}
+
+        <h3>По вашему запросу ничего не найдено</h3>
+
+        {% endfor %}
+
+        {% endif %}
+
+        <form action="{% url 'record:list' %}" class="form-inline" method="get">
+
+            <button type="submit" class="btn btn-primary btn-lg mb-2">Назад</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+<html>

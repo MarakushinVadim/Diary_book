@@ -1,0 +1,43 @@
+{% extends 'record/index.html' %}
+{% load my_tags %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<form action="{% url 'record:search' %}" class="form-inline" method="get">
+
+    <div class="form-group mb-8">
+
+        <h1>{% if type %}{{ type.name }}{% else %} {% endif %}</h1>
+
+    </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+
+        <label for="" class="sr-only">Поиск по названию и содержанию</label>
+
+        <input name="search" type="" class="form-control" id="" placeholder="Введите запрос для поиска">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg mb-2">Поиск</button>
+
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Имя</th>
+        <th scope="col">Дата/Время</th>
+        <th scope="col">Содержание</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for record in object_list %}
+    <tr>
+        <td><a href="{% url 'record:detail' record.pk %}">{{ record.name | name_filter }}</a></td>
+        <td>{{ record.created_at }}</td>
+        <th scope="row">{{ record.description | description_filter }}</th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
