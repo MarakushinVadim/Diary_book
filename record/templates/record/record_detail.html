@@ -13,6 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ object.name }}</h5>
                         <p class="card-text">{{ object.description }}</p>
+                        <p class="card-text">{{ object.created_at }}</p>
                         <a href="{% url 'record:update' object.pk %}" class="card-link">Изменить запись</a>
                         <a href="{% url 'record:delete' object.pk %}" class="card-link">Удалить запись</a>
                         <a href="{% url 'record:list' %}" class="card-link">Список записей</a>

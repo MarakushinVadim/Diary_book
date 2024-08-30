@@ -1,11 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  TemplateView, UpdateView)
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
 from record.forms import RecordForm
 from record.models import Record
@@ -13,10 +18,6 @@ from record.models import Record
 
 class BaseView(TemplateView):
     template_name = "record/index.html"
-
-
-def base_view(request):
-    return render(request, "record/index.html")
 
 
 class RecordCreateView(CreateView):
@@ -68,9 +69,10 @@ def search(request):
         query = request.GET.get("search")
     if query == "":
         query = "None"
-
-    results = Record.objects.filter(
-        Q(name__icontains=query) | Q(description__icontains=query)
-    )
+    r_user = request.user
+    queryset = Record.objects.filter(author=r_user)
+    for obj in queryset:
+        if query in obj.name or query in obj.description:
+            results.append(obj)
 
     return render(request, "record/search.html", {"query": query, "results": results})
